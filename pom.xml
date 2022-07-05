@@ -31,14 +31,14 @@
         <!--
             Java source/target to use for compilation.
           -->
-        <javac.target>1.8</javac.target>
+        <javac.target>18</javac.target>
 
         <!--
            Put an approriate Kotlin compiler and stdlib version here.
            Available versions are listed here:
                 http://kotlinlang.org/docs/reference/using-maven.html#plugin-and-versions
          -->
-        <kotlin.version>1.6.10</kotlin.version>
+        <kotlin.version>1.7.0</kotlin.version>
 
         <!--
             Select a JMH benchmark generator to use. Available options:
