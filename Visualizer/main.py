@@ -3,7 +3,7 @@ import csv
 import math
 
 import matplotlib.pyplot as plt
-from matplotlib.ticker import StrMethodFormatter, NullFormatter
+from matplotlib.ticker import StrMethodFormatter
 
 
 class ExceptionRun:
