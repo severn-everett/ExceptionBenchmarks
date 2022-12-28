@@ -26,7 +26,7 @@
         <!--
             JMH version to use with this project.
           -->
-        <jmh.version>1.27</jmh.version>
+        <jmh.version>1.35</jmh.version>
 
         <!--
             Java source/target to use for compilation.
@@ -38,7 +38,7 @@
            Available versions are listed here:
                 http://kotlinlang.org/docs/reference/using-maven.html#plugin-and-versions
          -->
-        <kotlin.version>1.7.0</kotlin.version>
+        <kotlin.version>1.8.0</kotlin.version>
 
         <!--
             Select a JMH benchmark generator to use. Available options:
