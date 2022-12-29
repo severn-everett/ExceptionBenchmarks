@@ -363,7 +363,7 @@ fun main() {
 
     var base = 1
     while (base < 10) {
-        for (mult in 1 until 10) {
+        for (mult in 1 until 1_000_000) {
             val ppm = base * mult
             val opt = OptionsBuilder()
                 .include(".*${ExceptionBenchmarks::class.java.simpleName}.*")

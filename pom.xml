@@ -15,31 +15,14 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
     </dependencies>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <!--
-            JMH version to use with this project.
-          -->
-        <jmh.version>1.35</jmh.version>
-
-        <!--
-            Java source/target to use for compilation.
-          -->
-        <javac.target>18</javac.target>
-
-        <!--
-           Put an approriate Kotlin compiler and stdlib version here.
-           Available versions are listed here:
-                http://kotlinlang.org/docs/reference/using-maven.html#plugin-and-versions
-         -->
-        <kotlin.version>1.8.0</kotlin.version>
-
+        <javac.target>19</javac.target>
         <!--
             Select a JMH benchmark generator to use. Available options:
                default:    whatever JMH chooses by default;
@@ -47,10 +30,9 @@
                reflection: load classes and use Reflection over them;
           -->
         <jmh.generator>default</jmh.generator>
-
-        <!--
-            Name of the benchmark Uber-JAR to generate.
-          -->
+        <jmh.version>1.35</jmh.version>
+        <kotlin.compiler.jvmTarget>19</kotlin.compiler.jvmTarget>
+        <kotlin.version>1.8.0</kotlin.version>
         <uberjar.name>benchmarks</uberjar.name>
     </properties>
 
