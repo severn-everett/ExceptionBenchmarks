@@ -23,6 +23,14 @@ import org.openjdk.jmh.runner.options.VerboseMode
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
+private const val DELINEATOR = ","
+private val PARTS = Integer.getInteger("exceptPPM", 0)
+private const val CEILING = 1_000_000
+private const val RESULT_PRIMITIVE_RAW = "Result Primitive"
+private const val RESULT_PRIMITIVE_OUT = "Result (Primitive)"
+private const val RESULT_WRAPPER_RAW = "Result With Wrapper"
+private const val RESULT_WRAPPER_OUT = "Result (w/ Wrapper)"
+
 @Suppress("RedundantNullableReturnType")
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -43,43 +51,22 @@ open class ExceptionBenchmarks {
     }
 
     @Benchmark
-    fun chainException() = try {
-        ce01()
-    } catch (e: LilException) {
-        e.metadata
-    }
-
-    @Benchmark
-    fun dynamicRethrow() = try {
-        dr01()
-    } catch (e: LilException) {
-        e.metadata
-    }
-
-    @Benchmark
-    fun dynamicException() = try {
+    fun dynamic_exception() = try {
         de01()
     } catch (e: LilException) {
         e.metadata
     }
 
     @Benchmark
-    fun dynamicStackless() = try {
+    fun dynamic_stackless() = try {
         ds01()
     } catch (e: LilException) {
         e.metadata
     }
 
     @Benchmark
-    fun staticException() = try {
+    fun static_exception() = try {
         se01()
-    } catch (e: LilException) {
-        e.metadata
-    }
-
-    @Benchmark
-    fun staticStackless() = try {
-        ss01()
     } catch (e: LilException) {
         e.metadata
     }
@@ -88,60 +75,22 @@ open class ExceptionBenchmarks {
     fun flags() = m01()
 
     @Benchmark
-    fun sealedClass() = when (val result = sc01()) {
+    fun sealed_class() = when (val result = sc01()) {
         is LilResult.Success -> result.value
         is LilResult.Failure -> result.metadata
     }
 
     @Benchmark
-    fun resultPrimitive() = rp01().fold({ it }, { (it as LilException).metadata })
+    fun result_primitive() = rp01().fold({ it }, { (it as LilException).metadata })
 
     @Benchmark
-    fun resultResultWrapper() = rrw01().fold({ it }, { (it as LilException).metadata })
+    fun result_with_wrapper() = rrw01().fold({ it }, { (it as LilException).metadata })
 
     @Benchmark
-    fun inlineClass() = ic01().value
+    fun inline_class() = ic01().value
 
     @Benchmark
-    fun inlineAutobox() = ia01()?.value ?: LilOutcome.FAILURE
-
-    private fun ce01() = try { ce02() * 2 } catch (e: LilException) { throw LilException(e, 1) }
-    private fun ce02() = try { ce03() * 2 } catch (e: LilException) { throw LilException(e, 2) }
-    private fun ce03() = try { ce04() * 2 } catch (e: LilException) { throw LilException(e, 3) }
-    private fun ce04() = try { ce05() * 2 } catch (e: LilException) { throw LilException(e, 4) }
-    private fun ce05() = try { ce06() * 2 } catch (e: LilException) { throw LilException(e, 5) }
-    private fun ce06() = try { ce07() * 2 } catch (e: LilException) { throw LilException(e, 6) }
-    private fun ce07() = try { ce08() * 2 } catch (e: LilException) { throw LilException(e, 7) }
-    private fun ce08() = try { ce09() * 2 } catch (e: LilException) { throw LilException(e, 8) }
-    private fun ce09() = try { ce10() * 2 } catch (e: LilException) { throw LilException(e, 9) }
-    private fun ce10() = try { ce11() * 2 } catch (e: LilException) { throw LilException(e, 10) }
-    private fun ce11() = try { ce12() * 2 } catch (e: LilException) { throw LilException(e, 11) }
-    private fun ce12() = try { ce13() * 2 } catch (e: LilException) { throw LilException(e, 12) }
-    private fun ce13() = try { ce14() * 2 } catch (e: LilException) { throw LilException(e, 13) }
-    private fun ce14() = try { ce15() * 2 } catch (e: LilException) { throw LilException(e, 14) }
-    private fun ce15() = try { ce16() * 2 } catch (e: LilException) { throw LilException(e, 15) }
-    private fun ce16(): Int {
-        return if (callSucceeded()) source else throw LilException(source)
-    }
-
-    private fun dr01() = try { dr02() * 2 } catch (e: LilException) { throw e }
-    private fun dr02() = try { dr03() * 2 } catch (e: LilException) { throw e }
-    private fun dr03() = try { dr04() * 2 } catch (e: LilException) { throw e }
-    private fun dr04() = try { dr05() * 2 } catch (e: LilException) { throw e }
-    private fun dr05() = try { dr06() * 2 } catch (e: LilException) { throw e }
-    private fun dr06() = try { dr07() * 2 } catch (e: LilException) { throw e }
-    private fun dr07() = try { dr08() * 2 } catch (e: LilException) { throw e }
-    private fun dr08() = try { dr09() * 2 } catch (e: LilException) { throw e }
-    private fun dr09() = try { dr10() * 2 } catch (e: LilException) { throw e }
-    private fun dr10() = try { dr11() * 2 } catch (e: LilException) { throw e }
-    private fun dr11() = try { dr12() * 2 } catch (e: LilException) { throw e }
-    private fun dr12() = try { dr13() * 2 } catch (e: LilException) { throw e }
-    private fun dr13() = try { dr14() * 2 } catch (e: LilException) { throw e }
-    private fun dr14() = try { dr15() * 2 } catch (e: LilException) { throw e }
-    private fun dr15() = try { dr16() * 2 } catch (e: LilException) { throw e }
-    private fun dr16(): Int {
-        return if (callSucceeded()) source else throw LilException(source)
-    }
+    fun inline_autobox() = ia01()?.value ?: LilOutcome.FAILURE
 
     private fun de01() = de02() * 2
     private fun de02() = de03() * 2
@@ -198,25 +147,6 @@ open class ExceptionBenchmarks {
     private fun se15() = se16() * 2
     private fun se16(): Int {
         return if (callSucceeded()) source else throw staticException
-    }
-
-    private fun ss01() = ss02() * 2
-    private fun ss02() = ss03() * 2
-    private fun ss03() = ss04() * 2
-    private fun ss04() = ss05() * 2
-    private fun ss05() = ss06() * 2
-    private fun ss06() = ss07() * 2
-    private fun ss07() = ss08() * 2
-    private fun ss08() = ss09() * 2
-    private fun ss09() = ss10() * 2
-    private fun ss10() = ss11() * 2
-    private fun ss11() = ss12() * 2
-    private fun ss12() = ss13() * 2
-    private fun ss13() = ss14() * 2
-    private fun ss14() = ss15() * 2
-    private fun ss15() = ss16() * 2
-    private fun ss16(): Int {
-        return if (callSucceeded()) source else throw staticStacklessException
     }
 
     private fun m01() = m02().let { if (it != -1) it * 2 else it }
@@ -426,18 +356,13 @@ open class ExceptionBenchmarks {
     private fun callSucceeded(): Boolean {
         return Random.nextInt(CEILING) >= PARTS
     }
-
-    companion object {
-        private val PARTS = Integer.getInteger("exceptPPM", 0)
-        private const val CEILING = 1_000_000
-    }
 }
 
 fun main() {
     var headerPrinted = false
 
     var base = 1
-    while (base < 1_000_000) {
+    while (base < 10) {
         for (mult in 1 until 10) {
             val ppm = base * mult
             val opt = OptionsBuilder()
@@ -454,22 +379,30 @@ fun main() {
             val results = Runner(opt).run()
 
             if (!headerPrinted) {
-                print("ppm;")
-                results.forEach { result ->
-                    print("${result.primaryResult.label};")
-                    print("${result.primaryResult.label}:error;")
+                print("PPM$DELINEATOR")
+                val headerLine = results.joinToString(DELINEATOR) { result ->
+                    var label = result.primaryResult.label.split("_")
+                        .joinToString(" ") { word ->
+                            word.replaceFirstChar(Char::uppercaseChar)
+                        }
+                    if (label == RESULT_PRIMITIVE_RAW) {
+                        label = RESULT_PRIMITIVE_OUT
+                    } else if (label == RESULT_WRAPPER_RAW) {
+                        label = RESULT_WRAPPER_OUT
+                    }
+                    "$label$DELINEATOR$label Error"
                 }
-                println()
+                println(headerLine)
                 headerPrinted = true
             }
 
-            print("$ppm;")
-            results.forEach { result ->
+            print("$ppm,")
+            val resultLine = results.joinToString(DELINEATOR) { result ->
                 val score = "%.3f".format(result.primaryResult.score)
                 val error = "%.3f".format(result.primaryResult.statistics.getMeanErrorAt(0.99))
-                print("$score;$error;")
+                "$score$DELINEATOR$error"
             }
-            println()
+            println(resultLine)
         }
         base *= 10
     }
