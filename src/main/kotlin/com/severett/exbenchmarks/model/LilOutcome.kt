@@ -6,6 +6,5 @@ value class LilOutcome(val value: Int) {
 
     companion object {
         const val FAILURE = -1
-        fun createFailure() = LilOutcome(FAILURE)
     }
 }

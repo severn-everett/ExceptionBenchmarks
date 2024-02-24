@@ -2,6 +2,7 @@ package com.severett.exbenchmarks
 
 import com.severett.exbenchmarks.model.LilException
 import com.severett.exbenchmarks.model.LilOutcome
+import com.severett.exbenchmarks.model.LilOutcome.Companion.FAILURE
 import com.severett.exbenchmarks.model.LilResult
 import com.severett.exbenchmarks.model.LilStacklessException
 import com.severett.exbenchmarks.model.ResultWrapper
@@ -90,7 +91,7 @@ open class ExceptionBenchmarks {
     fun inline_class() = ic01().value
 
     @Benchmark
-    fun inline_autobox() = ia01()?.value ?: LilOutcome.FAILURE
+    fun inline_autobox() = ia01()?.value ?: FAILURE
 
     private fun de01() = de02() * 2
     private fun de02() = de03() * 2
@@ -286,71 +287,71 @@ open class ExceptionBenchmarks {
     private fun ic14() = ic15().let { if (it.isSuccess()) LilOutcome(it.value * 2) else it }
     private fun ic15() = ic16().let { if (it.isSuccess()) LilOutcome(it.value * 2) else it }
     private fun ic16(): LilOutcome {
-        return if (callSucceeded()) LilOutcome(source) else LilOutcome.createFailure()
+        return if (callSucceeded()) LilOutcome(source) else LilOutcome(FAILURE)
     }
 
     private fun ia01(): LilOutcome? {
         val outcome = ia02()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia02(): LilOutcome? {
         val outcome = ia03()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia03(): LilOutcome? {
         val outcome = ia04()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia04(): LilOutcome? {
         val outcome = ia05()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia05(): LilOutcome? {
         val outcome = ia06()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia06(): LilOutcome? {
         val outcome = ia07()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia07(): LilOutcome? {
         val outcome = ia08()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia08(): LilOutcome? {
         val outcome = ia09()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia09(): LilOutcome? {
         val outcome = ia10()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia10(): LilOutcome? {
         val outcome = ia11()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia11(): LilOutcome? {
         val outcome = ia12()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia12(): LilOutcome? {
         val outcome = ia13()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia13(): LilOutcome? {
         val outcome = ia14()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia14(): LilOutcome? {
         val outcome = ia15()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia15(): LilOutcome? {
         val outcome = ia16()
-        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome.createFailure()
+        return if (outcome?.isSuccess() == true) LilOutcome(outcome.value) else LilOutcome(FAILURE)
     }
     private fun ia16(): LilOutcome? {
-        return if (callSucceeded()) LilOutcome(source) else LilOutcome.createFailure()
+        return if (callSucceeded()) LilOutcome(source) else LilOutcome(FAILURE)
     }
 
     private fun callSucceeded(): Boolean {
