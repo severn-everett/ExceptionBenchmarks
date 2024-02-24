@@ -52,6 +52,7 @@ open class ExceptionBenchmarks {
     }
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun dynamic_exception() = try {
         de01()
     } catch (e: LilException) {
@@ -59,6 +60,7 @@ open class ExceptionBenchmarks {
     }
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun dynamic_stackless() = try {
         ds01()
     } catch (e: LilException) {
@@ -66,6 +68,7 @@ open class ExceptionBenchmarks {
     }
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun static_exception() = try {
         se01()
     } catch (e: LilException) {
@@ -73,24 +76,30 @@ open class ExceptionBenchmarks {
     }
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun flags() = m01()
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun sealed_class() = when (val result = sc01()) {
         is LilResult.Success -> result.value
         is LilResult.Failure -> result.metadata
     }
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun result_primitive() = rp01().fold({ it }, { (it as LilException).metadata })
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun result_with_wrapper() = rrw01().fold({ it }, { (it as LilException).metadata })
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun inline_class() = ic01().value
 
     @Benchmark
+    // @Fork(jvmArgs = ["-XX:-Inline"])
     fun inline_autobox() = ia01()?.value ?: FAILURE
 
     private fun de01() = de02() * 2
