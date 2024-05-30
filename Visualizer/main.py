@@ -57,7 +57,7 @@ def parse_file(file_name):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a bar chart from results.')
     parser.add_argument('-f', '--file', type=str, help='the data file')
-    parser.add_argument('-y', '--y_label', type=str, help='the y-axis label')
+    # parser.add_argument('-y', '--y_label', type=str, help='the y-axis label')
     args = parser.parse_args()
 
     parse_file(args.file)
@@ -72,7 +72,8 @@ if __name__ == '__main__':
     plt.gca().get_xaxis().set_major_formatter(major_formatter)
     label_size = 'x-large'
     plt.xlabel('PPM', fontsize=label_size, fontweight='bold')
-    plt.ylabel(args.y_label, fontsize=label_size, fontweight='bold')
+    plt.ylabel('Execution Time (ns)', fontsize=label_size, fontweight='bold')
+    # plt.ylabel(args.y_label, fontsize=label_size, fontweight='bold')
     plt.grid(visible=True, color='0.8')
     plt.legend()
     plt.tight_layout()
