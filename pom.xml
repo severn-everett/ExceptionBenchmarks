@@ -22,7 +22,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javac.target>21</javac.target>
+        <javac.target>25</javac.target>
         <!--
             Select a JMH benchmark generator to use. Available options:
                default:    whatever JMH chooses by default;
@@ -31,8 +31,8 @@
           -->
         <jmh.generator>default</jmh.generator>
         <jmh.version>1.37</jmh.version>
-        <kotlin.compiler.jvmTarget>21</kotlin.compiler.jvmTarget>
-        <kotlin.version>2.0.0</kotlin.version>
+        <kotlin.compiler.jvmTarget>25</kotlin.compiler.jvmTarget>
+        <kotlin.version>2.2.21</kotlin.version>
         <uberjar.name>benchmarks</uberjar.name>
     </properties>
 
