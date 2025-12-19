@@ -1,3 +1,4 @@
 /target/
 /.idea/ExceptionBenchmarks.iml
 /ExceptionBenchmarks.iml
+/results/graphs/
